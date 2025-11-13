@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Surat Cinta Ulang Tahun 💌</title>
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background: radial-gradient(circle at top, #ffe6f2, #ffb3c6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-family: "Poppins", sans-serif;
+    overflow: hidden;
+  }
+
+  h1 {
+    font-size: 2.8em;
+    color: #ff3b7c;
+    text-shadow: 0 0 15px rgba(255, 100, 150, 0.7);
+    animation: glow 2s infinite alternate;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.5s ease, opacity 0.5s;
+  }
+
+  @keyframes glow {
+    from { text-shadow: 0 0 10px #ff7eb3, 0 0 20px #ff4d94; }
+    to { text-shadow: 0 0 25px #ff007f, 0 0 40px #ff66b3; }
+  }
+
+  .card {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    padding: 20px 30px;
+    text-align: center;
+    max-width: 80%;
+    backdrop-filter: blur(8px);
+    transform: scale(0);
+    opacity: 0;
+    transition: transform 0.6s ease, opacity 0.6s;
+    color: #5e2045;
+    font-size: 1.3em;
+    box-shadow: 0 10px 30px rgba(255, 80, 140, 0.2);
+  }
+
+  .card.show {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  button {
+    margin-top: 25px;
+    padding: 12px 24px;
+    font-size: 1.1em;
+    border: none;
+    border-radius: 30px;
+    background: linear-gradient(90deg, #ff66b3, #ff1a75);
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 6px 15px rgba(255, 50, 100, 0.3);
+    transition: transform 0.2s, opacity 0.3s;
+  }
+
+  button:hover {
+    transform: scale(1.08);
+  }
+
+  button.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* Efek hati jatuh */
+  .heart {
+    position: absolute;
+    color: #ff4d94;
+    font-size: 20px;
+    animation: fall linear forwards;
+  }
+
+  @keyframes fall {
+    to {
+      transform: translateY(100vh) rotate(360deg);
+      opacity: 0;
+    }
+  }
+
+</style>
+</head>
+<body>
+
+<h1 id="loveTitle">💖 Klik untuk Membuka Ucapan 💖</h1>
+<div id="card" class="card"></div>
+<button id="nextBtn" style="display:none;">💌 Buka Pesan Berikutnya 💌</button>
+
+<script>
+const messages = [
+  "Selamat ulang tahun, cintaku. Hari ini tentang kamu — dan betapa berartinya kamu bagiku. 💕",
+  "Kamu bukan hanya seseorang yang aku cintai, tapi juga rumah tempat hatiku pulang. 🏠❤️",
+  "Terima kasih sudah jadi alasan senyumku setiap hari. 😊💞",
+  "Aku bersyukur kamu lahir di dunia ini... karena tanpamu, hidupku hampa. 🌸",
+  "Setiap detik bersamamu terasa singkat, tapi setiap kenangan bersamamu abadi. 💫",
+  "Selamat ulang tahun, sayang. Semoga kamu bahagia — hari ini dan selamanya. 💖"
+];
+
+let index = 0;
+const title = document.getElementById("loveTitle");
+const card = document.getElementById("card");
+const btn = document.getElementById("nextBtn");
+
+function createHearts() {
+  for (let i = 0; i < 20; i++) {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.textContent = "💖";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = (2 + Math.random() * 3) + "s";
+    heart.style.fontSize = (15 + Math.random() * 25) + "px";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 4000);
+  }
+}
+
+function showMessage() {
+  if (index < messages.length) {
+    card.classList.remove("show");
+    setTimeout(() => {
+      card.textContent = messages[index];
+      card.classList.add("show");
+      createHearts();
+      index++;
+      if (index === 1) {
+        btn.style.display = "inline-block";
+        title.textContent = "💌 Ucapan sayang dari difaa 💌";
+      }
+      if (index >= messages.length) {
+        btn.textContent = "💞 Semua Pesan Telah Dibuka 💞";
+        btn.classList.add("disabled");
+      }
+    }, 400);
+  }
+}
+
+title.addEventListener("click", () => {
+  if (index === 0) showMessage();
+});
+
+btn.addEventListener("click", () => {
+  if (index < messages.length) showMessage();
+});
+</script>
+
+</body>
+</html>
